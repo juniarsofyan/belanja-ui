@@ -235,12 +235,13 @@ export default {
                 })
                 
                 const user_data = JSON.parse(localStorage.getItem('user_data'))
+                const affiliation = JSON.parse(localStorage.getItem('affiliation'))
 
                 let transaction_master = {
                     transaction_date: this.current_date,
                     transaction_number: this.transaction_number,
-                    customer_email: user_data.email, //this.$store.getters.customer_email,
-                    customer_name: user_data.name, //this.$store.getters.customer_name,
+                    customer_id: affiliation.no_member, //this.$store.getters.customer_id,
+                    customer_name: affiliation.nama, //this.$store.getters.customer_name,
                     shipping_method: this.shipping_method,
                     courier: this.courier ? this.courier : "",
                     shipping_address_id: this.delivery_address ? this.delivery_address : "",

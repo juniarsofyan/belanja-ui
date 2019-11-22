@@ -137,7 +137,7 @@ export default {
                 .get(url)
                 .then((response) => {
                     if (response.data.data != 0) {
-                        this.pagination.pageCount = response.data.rowcount / 20
+                        this.pagination.pageCount = Math.round(response.data.rowcount / 20) + 1
                         this.products = response.data.data
                     } else {
                         this.products = null

@@ -39,7 +39,7 @@
             </div>
             <div class="count-star">(7)</div>
                     </div>-->
-                    <div class="price" v-if="product.harga_diskon > 0">
+                    <div class="price" v-if="product.harga_diskon > 0 && product.harga > product.harga_diskon">
                         <del>{{ product.harga | rupiah }}</del>
                         <ins>{{ product.harga_diskon | rupiah }}</ins>
                     </div>
