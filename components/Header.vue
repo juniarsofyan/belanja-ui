@@ -108,7 +108,7 @@
                                             <div class="inner">
                                                 <input type="text" class="input" placeholder="Your search here" v-model="keyword">
                                                 <nuxt-link :to="`/products/search?keyword=${keyword}`" tag="button" class="btn-search">
-                                                    Searchs
+                                                    Search
                                                 </nuxt-link>
                                             </div>
                                         </div>

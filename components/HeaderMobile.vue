@@ -21,8 +21,8 @@
                     <div class="header-searchform-box">
                         <form class="header-searchform">
                             <div class="searchform-wrap">
-                                <input type="text" class="search-input" placeholder="Enter keywords to search..." />
-                                <input type="submit" class="submit button" value="Search" />
+                                <input type="text" class="input" placeholder="Your search here" v-model="keyword">
+                                <nuxt-link :to="`/products/search?keyword=${keyword}`" tag="button" class="btn-search"> Search </nuxt-link>
                             </div>
                         </form>
                     </div>
