@@ -93,13 +93,13 @@
                                                             >
                                                                 <option disabled selected>- Choose Province -</option>
                                                                 <option
-                                                                    v-for="province in provinces"
-                                                                    :key="province.province_id"
-                                                                    :value="province"
-                                                                    :selected="(address.province ? address.province.province_id == province.province_id : false)"
-                                                                    :data-province-id="province.province_id"
-                                                                    :data-province-name="province.province"
-                                                                >{{ province.province }}
+                                                                    v-for="prov in provinces"
+                                                                    :key="prov.province_id"
+                                                                    :value="prov"
+                                                                    :selected="(province ? province.province_id == prov.province_id : false)"
+                                                                    :data-province-id="prov.province_id"
+                                                                    :data-province-name="prov.province"
+                                                                >{{ prov.province }}
                                                                 </option>
                                                             </select>
                                                         </p>
@@ -116,13 +116,13 @@
                                                             >
                                                                 <option disabled selected>- Choose City -</option>
                                                                 <option
-                                                                    v-for="city in cities"
-                                                                    :key="city.city_id"
-                                                                    :value="city"
-                                                                    :selected="(address.city ? address.city.city_id == city.city_id : false)"
-                                                                    :data-city-id="city.city_id"
-                                                                    :data-city-name="city.city_name"
-                                                                >{{ city.city_name }}
+                                                                    v-for="cty in cities"
+                                                                    :key="cty.city_id"
+                                                                    :value="cty"
+                                                                    :selected="(city ? city.city_id == cty.city_id : false)"
+                                                                    :data-city-id="cty.city_id"
+                                                                    :data-city-name="cty.city_name"
+                                                                >{{ cty.city_name }}
                                                                 </option>
                                                             </select>
                                                         </p>
@@ -139,13 +139,13 @@
                                                             >
                                                                 <option disabled selected>- Choose City -</option>
                                                                 <option
-                                                                    v-for="subdistrict in subdistricts"
-                                                                    :key="subdistrict.subdistrict_id"
-                                                                    :value="subdistrict"
-                                                                    :selected="(address.subdistrict ? address.subdistrict.subdistrict_id == subdistrict.subdistrict_id : false)"
-                                                                    :data-subdistrict-id="subdistrict.subdistrict_id"
-                                                                    :data-subdistrict-name="subdistrict.subdistrict_name"
-                                                                >{{ subdistrict.subdistrict_name }}
+                                                                    v-for="subdist in subdistricts"
+                                                                    :key="subdist.subdistrict_id"
+                                                                    :value="subdist"
+                                                                    :selected="(subdistrict ? subdistrict.subdistrict_id == subdist.subdistrict_id : false)"
+                                                                    :data-subdistrict-id="subdist.subdistrict_id"
+                                                                    :data-subdistrict-name="subdist.subdistrict_name"
+                                                                >{{ subdist.subdistrict_name }}
                                                                 </option>
                                                             </select>
                                                         </p>
@@ -156,7 +156,7 @@
                                                                 class="input-text"
                                                                 id="exampleFormControlTextarea1"
                                                                 rows="3"
-                                                                v-model="address.address"
+                                                                v-model="address"
                                                             ></textarea>
                                                         </p>
                                                         <p class="col-12">
@@ -165,7 +165,7 @@
                                                                 type="text"
                                                                 style="width:100%"
                                                                 class="input-text"
-                                                                v-model="address.postcode"
+                                                                v-model="postcode"
                                                             />
                                                         </p>
                                                     </template>
@@ -202,18 +202,33 @@ export default {
             provinces: [],
             cities: [],
             subdistricts: [],
-            province: [],
-            city: [],
-            subdistrict: [],
-            default_shipping_address: []
+            // province: [],
+            // city: [],
+            // subdistrict: [],
+            default_shipping_address: [],
+
+            // new vars
+
+            province: {},
+            city: {},
+            subdistrict: {},
+            address: "",
+            postcode: ""
         }
     },
     watch: {
-        'address': {
+        'province': {
             handler(val) {
                 if (val) {
-                    this.getCities(val.province.province_id)
-                    this.getSubdistricts(val.city.city_id)
+                    this.getCities(val.province_id)
+                }
+            },
+            deep: true
+        },
+        'city': {
+            handler(val) {
+                if (val) {
+                    this.getSubdistricts(val.city_id)
                 }
             },
             deep: true
@@ -299,46 +314,52 @@ export default {
                     
                     const result = response.data.data
 
-                    this.address = {
-                        id: result.id,
-                        province : {
-                            province_id : parseInt(result.provinsi_id),
-                            province_name: result.provinsi_nama
-                        },
-                        city : {
-                            city_id : parseInt(result.kota_id),
-                            city_name: result.kota_nama
-                        },
-                        subdistrict : {
-                            subdistrict_id : parseInt(result.kecamatan_id),
-                            subdistrict_name: result.kecamatan_nama
-                        },
-                        address: result.alamat,
-                        postcode: result.kode_pos
+                    this.shipping_address_id = result.id
+
+                    this.province = {
+                        province_id : parseInt(result.provinsi_id),
+                        province_name: result.provinsi_nama
                     }
+
+                    this.city = {
+                        city_id : parseInt(result.kota_id),
+                        city_name: result.kota_nama
+                    }
+
+                    this.subdistrict = {
+                        subdistrict_id : parseInt(result.kecamatan_id),
+                        subdistrict_name: result.kecamatan_nama
+                    }
+
+                    this.address = result.alamat
+
+                    this.postcode = result.kode_pos
 
                     this.no_address_available = false
 
                     this.$store.dispatch('checkout/setDeliveryAddress', result.id)
                 } else {
-                    this.address = {
-                        id: false,
-                        province : {
-                            province_id : false,
-                            province_name: false
-                        },
-                        city : {
-                            city_id : false,
-                            city_name: false
-                        },
-                        subdistrict : {
-                            subdistrict_id : false,
-                            subdistrict_name: false
-                        },
-                        address: "",
-                        postcode: ""
+                    this.shipping_address_Zid = false
+                    
+                    this.province = {
+                        province_id : false,
+                        province_name: false
                     }
 
+                    this.city = {
+                        city_id : false,
+                        city_name: false
+                    }
+
+                    this.subdistrict = {
+                        subdistrict_id : false,
+                        subdistrict_name: false
+                    }
+
+                    this.address = ""
+
+                    this.postcode = ""
+                
                     this.no_address_available = true
 
                     this.$store.dispatch('checkout/setDeliveryAddress', false)
@@ -349,16 +370,16 @@ export default {
             })
         },
         setProvinceToModel(event) {
-            this.address.province.province_id = parseInt(event.target.options[event.target.options.selectedIndex].dataset.provinceId)
-            this.address.province.province_name = event.target.options[event.target.options.selectedIndex].dataset.provinceName
+            this.province.province_id = parseInt(event.target.options[event.target.options.selectedIndex].dataset.provinceId)
+            this.province.province_name = event.target.options[event.target.options.selectedIndex].dataset.provinceName
         },
         setCityToModel(event) {
-            this.address.city.city_id = parseInt(event.target.options[event.target.options.selectedIndex].dataset.cityId)
-            this.address.city.city_name = event.target.options[event.target.options.selectedIndex].dataset.cityName
+            this.city.city_id = parseInt(event.target.options[event.target.options.selectedIndex].dataset.cityId)
+            this.city.city_name = event.target.options[event.target.options.selectedIndex].dataset.cityName
         },
         setSubdistrictToModel(event) {
-            this.address.subdistrict.subdistrict_id = parseInt(event.target.options[event.target.options.selectedIndex].dataset.subdistrictId)
-            this.address.subdistrict.subdistrict_name = event.target.options[event.target.options.selectedIndex].dataset.subdistrictName
+            this.subdistrict.subdistrict_id = parseInt(event.target.options[event.target.options.selectedIndex].dataset.subdistrictId)
+            this.subdistrict.subdistrict_name = event.target.options[event.target.options.selectedIndex].dataset.subdistrictName
         },
         addNewAddress() {
             // if (this.validateAddress()) {
@@ -367,14 +388,14 @@ export default {
                     email: window.localStorage.getItem('email'),
                     name: this.profile.name,
                     phone: this.profile.phone,
-                    province_id: this.address.province.province_id,
-                    province_name: this.address.province.province_name,
-                    city_id: this.address.city.city_id,
-                    city_name: this.address.city.city_name,
-                    subdistrict_id: this.address.subdistrict.subdistrict_id,
-                    subdistrict_name: this.address.subdistrict.subdistrict_name,
-                    address: this.address.address,
-                    postcode: this.address.postcode
+                    province_id: this.province.province_id,
+                    province_name: this.province.province_name,
+                    city_id: this.city.city_id,
+                    city_name: this.city.city_name,
+                    subdistrict_id: this.subdistrict.subdistrict_id,
+                    subdistrict_name: this.subdistrict.subdistrict_name,
+                    address: this.address,
+                    postcode: this.postcode
                 }).then(response => {
                     if (response.data.data == 1) {
                         this.getDefaultShippingAddresses()
@@ -388,17 +409,17 @@ export default {
             // }
         },
         updateAddress() {
-            this.$axios.post(`shipping-address/${this.address.id}/update`, {
+            this.$axios.post(`shipping-address/${this.shipping_address_id}/update`, {
                 name: this.profile.name,
                 phone: this.profile.phone,
-                province_id: this.address.province.province_id,
-                province_name: this.address.province.province_name,
-                city_id: this.address.city.city_id,
-                city_name: this.address.city.city_name,
-                subdistrict_id: this.address.subdistrict.subdistrict_id,
-                subdistrict_name: this.address.subdistrict.subdistrict_name,
-                address: this.address.address,
-                postcode: this.address.postcode
+                province_id: this.province.province_id,
+                province_name: this.province.province_name,
+                city_id: this.city.city_id,
+                city_name: this.city.city_name,
+                subdistrict_id: this.subdistrict.subdistrict_id,
+                subdistrict_name: this.subdistrict.subdistrict_name,
+                address: this.address,
+                postcode: this.postcode
             })
             .then(response => {
                 if (response.data.data == 1) {
@@ -410,31 +431,31 @@ export default {
             })
         },
         validateAddress() {
-            if (!this.address.hasOwnProperty('name') || this.address.name == "") {
+            if (this.name == "") {
                 return false
             }
 
-            if (!this.address.hasOwnProperty('phone') || this.address.phone == "") {
+            if (this.phone == "") {
                 return false
             }
 
-            if (!this.address.hasOwnProperty('province') || this.address.province == "") {
+            if (this.province == "" || this.province.length < 1) {
                 return false
             }
 
-            if (!this.address.hasOwnProperty('city') || this.address.city == "") {
+            if (this.city == "" || this.city.length < 1) {
                 return false
             }
 
-            if (!this.address.hasOwnProperty('subdistrict') || this.address.subdistrict == "") {
+            if (this.subdistrict == "" || this.subdistrict.length < 1) {
                 return false
             }
 
-            if (!this.address.hasOwnProperty('address') || this.address.address == "") {
+            if (this.address == "") {
                 return false
             }
 
-            if (!this.address.hasOwnProperty('postcode') || this.address.postcode == "") {
+            if (this.postcode == "") {
                 return false
             }
 
