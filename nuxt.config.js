@@ -3,6 +3,10 @@ import axios from 'axios'
 require('dotenv').config()
 
 export default {
+    server: {
+        port: 3000,
+        host: '0.0.0.0'
+    },
     generate: {
         fallback: true,
         routes: function () {
