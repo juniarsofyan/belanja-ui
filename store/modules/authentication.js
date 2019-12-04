@@ -34,10 +34,6 @@ const authentication = {
             state.user_data = replacement
             localStorage.setItem('user_data', JSON.stringify(replacement))
         },
-        setUserData(state, replacement) {
-            state.user_data = replacement
-            localStorage.setItem('user_data', JSON.stringify(replacement))
-        },
         setEmail(state, replacement) {
             state.email = replacement
             localStorage.setItem('email', replacement)
@@ -101,12 +97,6 @@ const authentication = {
                     commit('setIdToken', authResult.idToken)
                     commit('setExpiresAt', expiresAt)
 
-                    commit('setUserData', {
-                        name: authResult.idTokenPayload.name,
-                        email: authResult.idTokenPayload.email,
-                        picture: authResult.idTokenPayload.picture
-                    })
-
                     commit('setUserIsAuthenticated', true)
 
                     // check local profile, if not available then register
@@ -120,10 +110,24 @@ const authentication = {
                                 name: authResult.idTokenPayload.name.toUpperCase(),
                                 email: authResult.idTokenPayload.email
                             }).then((response) => {
-                                console.log(response.data.data)
+                                if (response.data.data != 0) {
+                                    commit('setUserData', {
+                                        user_id : response.data.data.user_id,
+                                        name: authResult.idTokenPayload.name,
+                                        email: authResult.idTokenPayload.email,
+                                        picture: authResult.idTokenPayload.picture
+                                    })
+                                }
                             })
                             .catch(e => {
                                 console.log(e)
+                            })
+                        } else {
+                            commit('setUserData', {
+                                user_id : response.data.data.user_id,
+                                name: authResult.idTokenPayload.name,
+                                email: authResult.idTokenPayload.email,
+                                picture: authResult.idTokenPayload.picture
                             })
                         }
                     }).catch(e => {

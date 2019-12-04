@@ -240,8 +240,9 @@ export default {
                 let transaction_master = {
                     transaction_date: this.current_date,
                     transaction_number: this.transaction_number,
-                    customer_id: affiliation.no_member, //this.$store.getters.customer_id,
-                    customer_name: affiliation.nama, //this.$store.getters.customer_name,
+                    member_id: affiliation.no_member,
+                    customer_id: user_data.user_id,
+                    customer_name: user_data.name,
                     shipping_method: this.shipping_method,
                     courier: this.courier ? this.courier : "",
                     shipping_address_id: this.delivery_address ? this.delivery_address : "",
