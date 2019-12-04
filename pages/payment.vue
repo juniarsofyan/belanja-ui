@@ -253,8 +253,9 @@ export default {
                     cart: this.items,
                     sales_branch_code: this.branch.code,
                     bank: this.bank.bank_name,
-                    shopping_platform: "SHOP",
+                    shopping_platform: "BSHOP",
                     note: "",
+                    affiliation_code: affiliation.no_member // KODE AFFILIASI SENGAJA DIISI DENGAN MEMBER_ID
 				}
 				
                 this.$axios.post(`transaction/add`, {
