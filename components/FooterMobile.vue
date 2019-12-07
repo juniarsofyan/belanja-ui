@@ -31,8 +31,6 @@
 </template>
 
 <script>
-// import { mapGetters, mapMutations, mapActions } from 'vuex'
-
 export default {
     computed: {
         cart_count: function () {
