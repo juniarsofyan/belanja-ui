@@ -1,22 +1,28 @@
-/* eslint-disable prettier/prettier */
 import axios from 'axios'
 require('dotenv').config()
 
 export default {
-    server: {
-        port: 3000,
-        host: '0.0.0.0'
-    },
     generate: {
         fallback: true,
-        routes: function () {
-            let products = axios.get(process.env.API_BASE_URL + 'products/product-codes').then((res) => {
-                return res.data.data.map((product) => {
-                    return `products/${product.kode_barang}/detail`
+        /* routes: [
+            '/products/:code/detail',
+            '/products/brightening',
+            '/products/purify',
+            '/products/decorative',
+            '/products/extra care',
+            '/products/series'
+        ] */
+
+        routes() {
+            const products = axios
+                .get(process.env.API_BASE_URL + 'products/product-codes')
+                .then((res) => {
+                    return res.data.data.map((product) => {
+                        return `products/${product.kode_barang}/detail`
+                    })
                 })
-            })
-            
-            let categories = [
+
+            const categories = [
                 '/products/brightening',
                 '/products/purify',
                 '/products/decorative',
@@ -24,8 +30,8 @@ export default {
                 '/products/series'
             ]
 
-            return Promise.all([products, categories]).then(values => {
-                return values.join().split(',');
+            return Promise.all([products, categories]).then((values) => {
+                return values.join().split(',')
             })
         }
     },
@@ -35,65 +41,95 @@ export default {
      */
     head: {
         title: process.env.npm_package_name || '',
-        meta: [{
-            charset: 'utf-8'
-        }, {
-            name: 'viewport',
-            content: 'width=device-width, initial-scale=1'
-        }, {
-            hid: 'description',
-            name: 'description',
-            content: process.env.npm_package_description || ''
-        }],
-        link: [{
+        meta: [
+            {
+                charset: 'utf-8'
+            },
+            {
+                name: 'viewport',
+                content: 'width=device-width, initial-scale=1'
+            },
+            {
+                hid: 'description',
+                name: 'description',
+                content: process.env.npm_package_description || ''
+            }
+        ],
+        link: [
+            {
                 rel: 'icon',
                 type: 'image/x-icon',
                 href: '/favicon.ico'
-            }, {
+            },
+            {
                 rel: 'stylesheet',
                 type: 'text/css',
-                href: 'https://fonts.googleapis.com/css?family=Arimo:400,400i,700,700i%7CLato:300,300i,400,400i,700,700i,900%7COpen+Sans:300,300i,400,400i,600,600i,700,700i,800'
+                href:
+                    'https://fonts.googleapis.com/css?family=Arimo:400,400i,700,700i%7CLato:300,300i,400,400i,700,700i,900%7COpen+Sans:300,300i,400,400i,600,600i,700,700i,800'
             },
             {
                 rel: 'stylesheet',
                 href: 'https://use.fontawesome.com/releases/v5.3.1/css/all.css',
-                integrity: 'sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU',
+                integrity:
+                    'sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU',
                 crossorigin: 'anonymous'
             }
         ],
-        script: [{
-            src: process.env.BASE_URL + 'assets/js/jquery-3.3.1.min.js'
-        }, {
-            src: process.env.BASE_URL + 'assets/js/bootstrap.min.js'
-        }, {
-            src: process.env.BASE_URL + 'assets/js/owl.carousel.min.js'
-        }, {
-            src: process.env.BASE_URL + 'assets/js/magnific-popup.min.js'
-        }, {
-            src: process.env.BASE_URL + 'assets/js/isotope.min.js'
-        }, {
-            src: process.env.BASE_URL + 'assets/js/jquery.mCustomScrollbar.min.js'
-        }, {
-            src: process.env.BASE_URL + 'assets/js/jquery-ui.min.js'
-        }, {
-            src: process.env.BASE_URL + 'assets/js/mobilemenu.js'
-        }, {
-            src: process.env.BASE_URL + 'assets/js/chosen.jquery.min.js'
-        }, {
-            src: process.env.BASE_URL + 'assets/js/slick.min.js'
-        }, {
-            src: process.env.BASE_URL + 'assets/js/jquery.elevateZoom.min.js'
-        }, {
-            src: process.env.BASE_URL + 'assets/js/jquery.actual.min.js'
-        }, {
-            src: process.env.BASE_URL + 'assets/js/jquery.fancybox.js'
-        }, {
-            src: process.env.BASE_URL + 'assets/js/lightbox.min.js'
-        }, {
-            src: process.env.BASE_URL + 'assets/js/jquery.mCustomScrollbar.min.js'
-        }, {
-            src: process.env.BASE_URL + 'assets/js/frontend-plugin.js'
-        }]
+        script: [
+            {
+                src: process.env.BASE_URL + 'assets/js/jquery-3.3.1.min.js'
+            },
+            {
+                src: process.env.BASE_URL + 'assets/js/bootstrap.min.js'
+            },
+            {
+                src: process.env.BASE_URL + 'assets/js/owl.carousel.min.js'
+            },
+            {
+                src: process.env.BASE_URL + 'assets/js/magnific-popup.min.js'
+            },
+            {
+                src: process.env.BASE_URL + 'assets/js/isotope.min.js'
+            },
+            {
+                src:
+                    process.env.BASE_URL +
+                    'assets/js/jquery.mCustomScrollbar.min.js'
+            },
+            {
+                src: process.env.BASE_URL + 'assets/js/jquery-ui.min.js'
+            },
+            {
+                src: process.env.BASE_URL + 'assets/js/mobilemenu.js'
+            },
+            {
+                src: process.env.BASE_URL + 'assets/js/chosen.jquery.min.js'
+            },
+            {
+                src: process.env.BASE_URL + 'assets/js/slick.min.js'
+            },
+            {
+                src:
+                    process.env.BASE_URL + 'assets/js/jquery.elevateZoom.min.js'
+            },
+            {
+                src: process.env.BASE_URL + 'assets/js/jquery.actual.min.js'
+            },
+            {
+                src: process.env.BASE_URL + 'assets/js/jquery.fancybox.js'
+            },
+            {
+                src: process.env.BASE_URL + 'assets/js/lightbox.min.js'
+            },
+            {
+                src:
+                    process.env.BASE_URL +
+                    'assets/js/jquery.mCustomScrollbar.min.js'
+            },
+            {
+                src: process.env.BASE_URL + 'assets/js/frontend-plugin.js'
+            }
+        ]
     },
     /*
      ** Customize the progress-bar color
@@ -108,18 +144,21 @@ export default {
             }
 
             const findEl = async (hash, x) => {
-                return (document.querySelector(hash) || new Promise((resolve, reject) => {
-                    if (x > 50) {
-                        return resolve()
-                    }
-                    setTimeout(() => {
-                        resolve(findEl(hash, ++x || 1))
-                    }, 100)
-                }))
+                return (
+                    document.querySelector(hash) ||
+                    new Promise((resolve, reject) => {
+                        if (x > 50) {
+                            return resolve()
+                        }
+                        setTimeout(() => {
+                            resolve(findEl(hash, ++x || 1))
+                        }, 100)
+                    })
+                )
             }
 
             if (to.hash) {
-                let el = await findEl(to.hash)
+                const el = await findEl(to.hash)
                 if ('scrollBehavior' in document.documentElement.style) {
                     return window.scrollTo({
                         top: el.offsetTop,
@@ -155,6 +194,7 @@ export default {
         '@/assets/css/style.css',
         '@/assets/css/style-custom.css',
         '@/assets/css/swiper.css',
+        // '@/assets/scss/main.scss',
         { src: '@/assets/scss/main.scss', lang: 'scss' }
     ],
     /*
@@ -196,39 +236,49 @@ export default {
         '@nuxtjs/pwa',
         // https://github.com/nuxt-community/dotenv-module
         [
-            '@nuxtjs/dotenv', {
+            '@nuxtjs/dotenv',
+            {
                 filename: '.env'
             }
         ],
         '@nuxtjs/toast',
         'vue-sweetalert2/nuxt',
         'nuxt-material-design-icons'
+        // [
+        //     'nuxt-sass-resources-loader',
+        //     [
+        //         '@/assets/scss/main.scss',
+        //         '@/assets/scss/product.scss'
+        //         // 'assets/scss/file/_path-two.scss'
+        //     ]
+        // ]
     ],
     toast: {
         position: 'top-center',
-        register: [ // Register custom toasts
+        register: [
+            // Register custom toasts
             {
                 name: 'cartadd',
                 message: (payload) => {
-                    if (!payload.message) return "Success"
+                    if (!payload.message) return 'Success'
                     return payload.message
                 },
                 options: {
                     position: 'top-right',
                     duration: 2000,
-                    icon : 'shopping_cart'
+                    icon: 'shopping_cart'
                 }
             },
             {
                 name: 'cartremove',
                 message: (payload) => {
-                    if (!payload.message) return "Removed"
+                    if (!payload.message) return 'Removed'
                     return payload.message
                 },
                 options: {
                     position: 'top-right',
                     duration: 2000,
-                    icon : 'delete',
+                    icon: 'delete',
                     type: 'error'
                 }
             }
@@ -278,27 +328,35 @@ export default {
                     loader: 'eslint-loader',
                     exclude: /(node_modules)/
                 })
-        
-                const vueLoader = config.module.rules.find(({loader}) => loader === 'vue-loader')
-                const { options: {loaders} } = vueLoader || { options: {} }
+
+                const vueLoader = config.module.rules.find(
+                    ({ loader }) => loader === 'vue-loader'
+                )
+                const {
+                    options: { loaders }
+                } = vueLoader || { options: {} }
                 if (loaders) {
                     for (const loader of Object.values(loaders)) {
-                        changeLoaderOptions(Array.isArray(loader) ? loader : [loader])
+                        changeLoaderOptions(
+                            Array.isArray(loader) ? loader : [loader]
+                        )
                     }
                 }
-                config.module.rules.forEach(rule => changeLoaderOptions(rule.use))
+                config.module.rules.forEach((rule) =>
+                    changeLoaderOptions(rule.use)
+                )
                 // console.log(util.inspect(config.module.rules, { depth: 6 }))
             }
         }
     }
 }
 
-function changeLoaderOptions (loaders) {
+function changeLoaderOptions(loaders) {
     if (loaders) {
         for (const loader of loaders) {
             if (loader.loader === 'sass-loader') {
                 Object.assign(loader.options, {
-                    includePaths: ['./assets'],
+                    includePaths: ['./assets']
                     // data: '@import "_imports";'
                 })
             }
