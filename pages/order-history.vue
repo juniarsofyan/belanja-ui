@@ -38,7 +38,7 @@
 						<div class="row">
 							<div class="col-md-4">
 								<b> SPB: </b> <br />
-								Bandung, Lengkong
+								{{ salesBranchDetail(order.transaction.kode_spb) }}
 							</div>
 
 							<div class="col-md-4">
@@ -81,7 +81,138 @@
 				order_histories: [],
 				transactions: [],
 				order_progress: [],
-				order_items: []
+				order_items: [],
+				sales_branches: [{
+                        code: '00000',
+                        province_id: 9,
+                        city_id: 23,
+                        city_name: 'BANDUNG',
+                        subdistrict_id: 359,
+                        subdistrict_name: 'Lengkong',
+                        phone: '+6282119163629',
+                        disabled: true
+                    },
+                    {
+                        code: '00217',
+                        province_id: 9,
+                        city_id: 55,
+                        city_name: 'BEKASI',
+                        subdistrict_id: 757,
+                        subdistrict_name: 'Mustika Jaya',
+                        phone: '+6281360360688',
+                        disabled: true
+                    },
+                    {
+                        code: '00553',
+                        province_id: 9,
+                        city_id: 79,
+                        city_name: 'BOGOR',
+                        subdistrict_id: 1067,
+                        subdistrict_name: 'Tanah Sereal',
+                        phone: '+6289513313909',
+                        disabled: true
+                    },
+                    {
+                        code: '00539',
+                        province_id: 34,
+                        city_id: 278,
+                        city_name: 'MEDAN',
+                        subdistrict_id: 3918,
+                        subdistrict_name: 'Medan Marelan',
+                        phone: '+6287868981767',
+                        disabled: true
+                    },
+                    {
+                        code: '00042',
+                        province_id: 9,
+                        city_id: 430,
+                        city_name: 'PELABUHAN RATU',
+                        subdistrict_id: 5954,
+                        subdistrict_name: 'Pelabuhan/Palabuhan Ratu',
+                        phone: '+6281337479174',
+                        disabled: true
+                    },
+                    {
+                        code: '00005',
+                        province_id: 9,
+                        city_id: 431,
+                        city_name: 'SUKABUMI',
+                        subdistrict_id: 5936,
+                        subdistrict_name: 'Cisaat',
+                        phone: '+6281563205235',
+                        disabled: true
+                    },
+                    {
+                        code: '01340',
+                        province_id: 9,
+                        city_id: 430,
+                        city_name: 'SUKABUMI',
+                        subdistrict_id: 5951,
+                        subdistrict_name: 'Pabuaran',
+                        phone: '+6285798847881',
+                        disabled: true
+                    },
+                    {
+                        code: '01838',
+                        province_id: 10,
+                        city_id: 41,
+                        city_name: 'PURWOKERTO',
+                        subdistrict_id: 591,
+                        subdistrict_name: 'Purwokerto Timur',
+                        phone: '+6283818235538',
+                        disabled: true
+                    },
+                    {
+                        code: '15666',
+                        province_id: 3,
+                        city_id: 457,
+                        city_name: 'TANGERANG SELATAN',
+                        subdistrict_id: 6312,
+                        subdistrict_name: 'Pamulang',
+                        phone: '-',
+                        disabled: true
+                    },
+                    {
+                        code: '15658',
+                        province_id: 9,
+                        city_id: 115,
+                        city_name: 'DEPOK',
+                        subdistrict_id: 1585,
+                        subdistrict_name: 'Sawangan',
+                        phone: '-',
+                        disabled: true
+                    },
+                    {
+                        code: '15641',
+                        province_id: 6,
+                        city_id: 154,
+                        city_name: 'Jakarta Timur',
+                        subdistrict_id: 2116,
+                        subdistrict_name: 'Duren Sawit',
+                        phone: '-',
+                        disabled: true
+                    },
+                    {
+                        code: '13722',
+                        province_id: 9,
+                        city_id: 54,
+                        city_name: 'Bekasi',
+                        subdistrict_id: 733,
+                        subdistrict_name: 'Cikarang Selatan',
+                        phone: '-',
+                        disabled: true
+                    },
+                    {
+                        code: '02006',
+                        province_id: 9,
+                        city_id: 126,
+                        city_name: 'Garut',
+                        subdistrict_id: 1751,
+                        subdistrict_name: 'Tarogong Kidul',
+                        phone: '-',
+                        disabled: true
+                    }
+                ]
 			}
 		},
 		methods: {
@@ -217,6 +348,10 @@
 					}
 				})
 			},
+			salesBranchDetail: function(spb_code) {
+				let spb = this.sales_branches.find((branch) => branch.code == spb_code)
+				return spb.city_name + ', ' + spb.subdistrict_name
+			}
 		},
 		created() {
 			this.getOrderHistory()

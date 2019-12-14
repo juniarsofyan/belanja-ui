@@ -14,11 +14,13 @@ const cart = {
                 item_exists.subtotal = parseInt(item_exists.qty) * parseInt(item_exists.price)
                 item_exists.grand_total = parseInt(item_exists.grand_total) + parseInt(item_exists.price_discount) * parseInt(item.qty)
                 item_exists.total_weight = item_exists.qty * item_exists.weight
+                item_exists.total_poin = item_exists.qty * item_exists.poin
             } else {
                 let product = {
                     product_code: item.kode_barang,
                     product_name: item.nama,
                     weight: item.berat,
+                    poin: item.poin,
                     price: parseInt(item.harga),
                     price_bonus_calculation: item.h_hpb,
                     discount: item.diskon,
@@ -27,6 +29,7 @@ const cart = {
                     subtotal: parseInt(item.harga) * parseInt(item.qty),
                     grand_total: item.harga_diskon ? parseInt(item.harga_diskon) * parseInt(item.qty) : parseInt(item.harga) * parseInt(item.qty),
                     total_weight: parseInt(item.qty) * item.berat,
+                    total_poin: parseInt(item.qty) * item.poin,
                     image: item.pic,
                     unit: item.unit,
                     category: item.jenis,
@@ -48,11 +51,13 @@ const cart = {
                 item_exists.subtotal = parseInt(item.qty) * parseInt(item_exists.price)
                 item_exists.grand_total = parseInt(item_exists.grand_total) + parseInt(item_exists.price_discount) * parseInt(item.qty)
                 item_exists.total_weight = parseInt(item.qty) * item_exists.weight
+                item_exists.total_poin = parseInt(item.qty) * item_exists.poin
             } else {
                 let product = {
                     product_code: item.kode_barang,
                     product_name: item.nama,
                     weight: item.berat,
+                    poin: item.poin,
                     price: parseInt(item.harga),
                     price_bonus_calculation: item.h_hpb,
                     discount: item.diskon,
@@ -61,6 +66,7 @@ const cart = {
                     subtotal: parseInt(item.harga) * parseInt(item.qty),
                     grand_total: item.harga_diskon ? parseInt(item.harga_diskon) * parseInt(item.qty) : parseInt(item.harga) * parseInt(item.qty),
                     total_weight: parseInt(item.qty) * item.berat,
+                    total_poin: parseInt(item.qty) * item.poin,
                     image: item.pic,
                     unit: item.unit,
                     category: item.jenis,
