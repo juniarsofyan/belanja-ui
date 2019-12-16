@@ -3,6 +3,7 @@
         <!-- <Topbar /> -->
         <Header :key="componentKey" />
         <HeaderMobile />
+        <MenuDrawer />
         <div class="main-content main-content-product no-sidebar">
             <div class="container">
                 <nuxt />
@@ -22,6 +23,7 @@ export default {
         // Topbar: () => import('~/components/Topbar'),
         Header: () => import('~/components/Header'),
         HeaderMobile: () => import('~/components/HeaderMobile'),
+        MenuDrawer: () => import('~/components/MenuDrawer'),
         Footer: () => import('~/components/Footer'),
         FooterMobile: () => import('~/components/FooterMobile')
     },
