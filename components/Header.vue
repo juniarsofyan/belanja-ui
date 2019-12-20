@@ -192,10 +192,10 @@
                                                         value="Login"
                                                         @click="auth0Login()"
                                                     />
-                                                    <button
+                                                    <!-- <button
                                                         class="button btn-outline"
                                                         @click="auth0Login()"
-                                                    >Register</button>
+                                                    >Register</button> -->
                                                 </div>
                                             </div>
                                         </div>
@@ -345,6 +345,8 @@ export default {
         },
         auth0Logout() {
             this.$store.dispatch('authentication/auth0Logout')
+            this.$store.dispatch('checkout/reset')
+            this.$store.dispatch('cart/reset')
         }
     }
 }

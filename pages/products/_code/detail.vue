@@ -1,105 +1,142 @@
 <template>
-	<div>
-		<!-- breadcrumb -->
-		<div class="breadcrumb-trail breadcrumbs">
-			<ul class="trail-items breadcrumb">
-				<nuxt-link to="/" tag="li" class="trail-item trail-begin">
-					<a href="#">
-						<span>Home</span>
-					</a>
-				</nuxt-link>
+    <div>
+        <!-- breadcrumb -->
+        <div class="breadcrumb-trail breadcrumbs">
+            <ul class="trail-items breadcrumb">
+                <nuxt-link to="/" tag="li" class="trail-item trail-begin">
+                    <a href="#">
+                        <span>Home</span>
+                    </a>
+                </nuxt-link>
 
-				<nuxt-link :to="`/products/${product.jenis}`" tag="li" class="trail-item trail-begin">
-					<a href="#">
-						<span>{{ product.jenis }}</span>
-					</a>
-				</nuxt-link>
+                <nuxt-link
+                    :to="`/products/${product.jenis}`"
+                    tag="li"
+                    class="trail-item trail-begin"
+                >
+                    <a href="#">
+                        <span>{{ product.jenis }}</span>
+                    </a>
+                </nuxt-link>
 
-				<nuxt-link :to="`/products/${product.kode_barang}/detail`" tag="li" class="trail-item trail-end active">
-					<a href="#">
-						<span>{{ product.nama }}</span>
-					</a>
-				</nuxt-link>
-			</ul>
-		</div>
+                <nuxt-link
+                    :to="`/products/${product.kode_barang}/detail`"
+                    tag="li"
+                    class="trail-item trail-end active"
+                >
+                    <a href="#">
+                        <span>{{ product.nama }}</span>
+                    </a>
+                </nuxt-link>
+            </ul>
+        </div>
 
-		<!-- main content -->
-		<div class="row">
-			<!-- sidemain -->
-			<div class="content-area content-details full-width col-lg-9 col-md-8 col-sm-12 col-xs-12">
-				<div class="site-main">
-					<!-- media box -->
-					<div class="details-product single-product-galery">
-						<div class="details-thumd">
-							<div class="image-preview-container image-thick-box image_preview_container">
-								<img id="img_zoom"
-									:data-zoom-image="`${$axios.defaults.baseURL}assets/img/products/${product.pic}.jpg`"
-									:src="`${$axios.defaults.baseURL}assets/img/products/${product.pic}.jpg`" alt />
-							</div>
-							<div class="product_preview image-small"></div>
-						</div>
-						<div class="details-infor">
-							<h1 class="product-title">{{ product.nama }}</h1>
-							<div class="availability" style="margin-left:0px;">
-								Product Code:
-								<a href="#">{{ product.kode_barang }}</a>
-							</div>
-							<div class="price">
-								<span>{{ product.harga | rupiah }}</span>
-							</div>
-							<div class="product-details-description">
-								<p class="desc">{{ product.des_singkat }}</p>
-								<p class="desc" v-html="product.manfaat"></p>
-								<br />
-							</div>
-							<div class="group-button">
-								<!-- <div class="yith-wcwl-add-to-wishlist">
+        <!-- main content -->
+        <div class="row">
+            <!-- sidemain -->
+            <div
+                class="content-area content-details full-width col-lg-9 col-md-8 col-sm-12 col-xs-12"
+            >
+                <div class="site-main">
+                    <!-- media box -->
+                    <div class="details-product single-product-galery">
+                        <div class="details-thumd">
+                            <div
+                                class="image-preview-container image-thick-box image_preview_container"
+                            >
+                                <img
+                                    id="img_zoom"
+                                    :data-zoom-image="`${$axios.defaults.baseURL}assets/img/products/${product.pic}.jpg`"
+                                    :src="`${$axios.defaults.baseURL}assets/img/products/${product.pic}.jpg`"
+                                    alt
+                                />
+                            </div>
+                            <div class="product_preview image-small"></div>
+                        </div>
+                        <div class="details-infor">
+                            <h1 class="product-title">{{ product.nama }}</h1>
+                            <div class="availability" style="margin-left:0px;">
+                                Product Code:
+                                <a href="#">{{ product.kode_barang }}</a>
+                            </div>
+                            <div class="price">
+                                <span>{{ product.harga | rupiah }}</span>
+                            </div>
+                            <div class="product-details-description">
+                                <p class="desc">{{ product.des_singkat }}</p>
+                                <p class="desc" v-html="product.manfaat"></p>
+                                <br />
+                            </div>
+                            <div class="group-button">
+                                <!-- <div class="yith-wcwl-add-to-wishlist">
 									<div class="yith-wcwl-add-button">
 										<a href="#">Add to Wishlist</a>
 									</div>
-								</div> -->
-								<div class="quantity-add-to-cart">
-									<div class="quantity">
-										<div class="control">
-											<span class="btn-number qtyminus quantity-minus" @click="minQty">-</span>
-											<input type="text" data-step="1" data-min="1" v-model="qty" title="Qty"
-												class="input-qty qty" size="4" />
-											<span class="btn-number qtyplus quantity-plus" @click="addQty">+</span>
-										</div>
-									</div>
-									<button class="single_add_to_cart_button button" @click="addItem">Add to
-										cart</button>
-								</div>
+                                </div>-->
+                                <div class="quantity-add-to-cart">
+                                    <div class="quantity">
+                                        <div class="control">
+                                            <span
+                                                class="btn-number qtyminus quantity-minus"
+                                                @click="minQty"
+                                            >-</span>
+                                            <input
+                                                type="text"
+                                                data-step="1"
+                                                data-min="1"
+                                                v-model="qty"
+                                                title="Qty"
+                                                class="input-qty qty"
+                                                size="4"
+                                            />
+                                            <span
+                                                class="btn-number qtyplus quantity-plus"
+                                                @click="addQty"
+                                            >+</span>
+                                        </div>
+                                    </div>
+                                    <button
+                                        class="single_add_to_cart_button button"
+                                        @click="addItem"
+                                    >
+                                        Add to
+                                        cart
+                                    </button>
+                                </div>
 
-								<p>&nbsp;</p>
-								<p>&nbsp;</p>
+                                <p>&nbsp;</p>
+                                <p>&nbsp;</p>
 
-								<div class="contact-bc">
-									<p>
-										Temukan produk perawatan yang sesuai dengan kebutuhanmu hanya Bersama Bellezkin. Dapatkan gratis konsultasi bersama Beauty Consultant kami :)
-									</p>
-									<a :href="`https://api.whatsapp.com/send?phone=628112288142&text=Halo!%0ASaya%20ingin%20ingin%20konsultasi%20lebih%20lanjut%20mengenai%20produk%20Bellezkin%0ASource : ${url}`"
-										class="single_bc_button button" target="_blank">
-										<i class="fab fa-whatsapp logo_bc"></i>&nbsp;
-										Contact Beauty Consultant Bellezkin
-									</a>
-								</div>
-								
-								<p id="warn">&nbsp; Klik <i class="fas fa-arrow-up"></i> untuk langsung terhubung via WhatssApp</p>
-							</div>
-						</div>
-					</div>
+                                <div class="contact-bc">
+                                    <p>Temukan produk perawatan yang sesuai dengan kebutuhanmu hanya Bersama Bellezkin. Dapatkan gratis konsultasi bersama Beauty Consultant kami :)</p>
+                                    <a
+                                        :href="`https://api.whatsapp.com/send?phone=628112288142&text=Halo!%0ASaya%20ingin%20ingin%20konsultasi%20lebih%20lanjut%20mengenai%20produk%20Bellezkin%0ASource : ${url}`"
+                                        class="single_bc_button button"
+                                        target="_blank"
+                                    >
+                                        <i class="fab fa-whatsapp logo_bc"></i>&nbsp;
+                                        Contact Beauty Consultant Bellezkin
+                                    </a>
+                                </div>
 
-					<!-- details atbs -->
-					<div class="row">
-						<div class="col-lg-6">
-							<!-- <br><br><br>
+                                <p id="warn">
+                                    &nbsp; Klik
+                                    <i class="fas fa-arrow-up"></i> untuk langsung terhubung via WhatssApp
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- details atbs -->
+                    <div class="row">
+                        <!-- <div class="col-lg-6"> -->
+                        <!-- <br><br><br>
 							<center>
 								<h3> Promote Product </h3>
-							</center> -->
-							<div class="row">
-								<!-- item Also Like start-->
-								<!-- <div class="col-lg-4">
+                        </center>-->
+                        <!-- <div class="row"> -->
+                        <!-- item Also Like start-->
+                        <!-- <div class="col-lg-4">
 									<div class="product-item default-layout product-type-variable">
 										<div class="product-inner equal-element">
 											<div class="product-top">
@@ -186,10 +223,10 @@
 											</div>
 										</div>
 									</div>
-								</div> -->
-								<!-- item promoted end-->
-								<!-- item Also Like start-->
-								<!-- <div class="col-lg-4">
+                        </div>-->
+                        <!-- item promoted end-->
+                        <!-- item Also Like start-->
+                        <!-- <div class="col-lg-4">
 									<div class="product-item default-layout product-type-variable">
 										<div class="product-inner equal-element">
 											<div class="product-top">
@@ -276,10 +313,10 @@
 											</div>
 										</div>
 									</div>
-								</div> -->
-								<!-- item promoted end-->
-								<!-- item Also Like start-->
-								<!-- <div class="col-lg-4">
+                        </div>-->
+                        <!-- item promoted end-->
+                        <!-- item Also Like start-->
+                        <!-- <div class="col-lg-4">
 									<div class="product-item default-layout product-type-variable">
 										<div class="product-inner equal-element">
 											<div class="product-top">
@@ -366,76 +403,91 @@
 											</div>
 										</div>
 									</div>
-								</div> -->
-								<!-- item promoted end-->
+                        </div>-->
+                        <!-- item promoted end-->
 
+                        <!-- </div> -->
+                        <!-- </div> -->
+                        <div class="col-lg-12">
+                            <div class="tab-details-product" style="margin-bottom:30px;">
+                                <ul class="tab-link" style="text-align:left">
+                                    <li class="active">
+                                        <a
+                                            data-toggle="tab"
+                                            aria-expanded="true"
+                                            href="#product-descriptions"
+                                        >Descriptions</a>
+                                    </li>
+                                    <li class>
+                                        <a
+                                            data-toggle="tab"
+                                            aria-expanded="true"
+                                            href="#product-guide "
+                                        >How to use</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-container">
+                                    <div id="product-descriptions" class="tab-panel active">
+                                        <p>{{ product.deskripsi }}</p>
+                                    </div>
+                                    <div id="product-guide" class="tab-panel">
+                                        <p>{{ product.cara_pakai }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="reset-floatding"></div>
+                            <div class="row">
+                                <div class="col-lg-12" style="background: lightpink;">
+                                    <br />
+                                    <center style="margin-bottom:20px">
+                                        <h3>You May Also Like</h3>
+                                    </center>
 
-
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="tab-details-product" style="margin-bottom:30px;">
-								<ul class="tab-link">
-									<li class="active">
-										<a data-toggle="tab" aria-expanded="true"
-											href="#product-descriptions">Descriptions</a>
-									</li>
-									<li class>
-										<a data-toggle="tab" aria-expanded="true" href="#product-guide ">How to use</a>
-									</li>
-								</ul>
-								<div class="tab-container">
-									<div id="product-descriptions" class="tab-panel active">
-										<p>{{ product.deskripsi }}</p>
-									</div>
-									<div id="product-guide" class="tab-panel">
-										<p>{{ product.cara_pakai }}</p>
-									</div>
-								</div>
-							</div>
-							<br>
-							<div class="reset-floatding"></div>
-							<div class="row">
-								<div class="col-lg-12" style="background: lightpink;">
-									<br>
-									<center>
-										<h3> You May Also Like </h3>
-									</center>
-
-									<slick ref="slick" :options="slickOptions">
-										<div class="product-item default-layout product-type-variable"
-											v-for="product in related_products" :key="product.kode_barang">
-											<div class="product-inner equal-element">
-												<div class="product-thumb">
-													<div class="thumb-inner">
-														<a href="#">
-															<img :src="`${$axios.defaults.baseURL}assets/img/thumbnails/${product.pic}.jpg`"
-																:alt="product.nama" />
-														</a>
-													</div>
-												</div>
-												<div class="text-center">
-													<h5 class="product-name product_title">
-														<a href="#">{{ product.nama }}</a>
-													</h5>
-													<div class="group-info">
-														<div class="price">
-															<!-- <del>€65</del> -->
-															<ins>{{ product.harga | rupiah }}</ins>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</slick>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                                    <slick ref="slick" :options="slickOptions">
+                                        <div
+                                            class="product-item default-layout product-type-variable"
+                                            v-for="product in related_products"
+                                            style="padding:10px;padding-bottom: 15px;"
+                                            :key="product.kode_barang"
+                                        >
+                                            <div
+                                                class="product-inner equal-element"
+                                                style="border-radius: 6px;border:none;"
+                                            >
+                                                <div class="product-thumb">
+                                                    <div class="thumb-inner">
+                                                        <a href="#">
+                                                            <img
+                                                                :src="`${$axios.defaults.baseURL}assets/img/thumbnails/${product.pic}.jpg`"
+                                                                :alt="product.nama"
+                                                                style="display: unset;"
+                                                            />
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="text-center">
+                                                    <h5 class="product-name product_title">
+                                                        <a href="#">{{ product.nama }}</a>
+                                                    </h5>
+                                                    <div class="group-info">
+                                                        <div class="price">
+                                                            <!-- <del>€65</del> -->
+                                                            <ins>{{ product.harga | rupiah }}</ins>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </slick>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
