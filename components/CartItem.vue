@@ -16,8 +16,11 @@
                 >{{ item.product_name }}</nuxt-link>
                 <div class="cart-info-wrap">
                     <div class="flex-cart-item">
-                        <div>
+                        <div v-if="item.price_discount > 0 && item.price > item.price_discount">
                             <div class="cart-product-price-disc">{{ item.price | rupiah }}</div>
+                            <div class="cart-product-price">{{ item.price_discount | rupiah }}</div>
+                        </div>
+                        <div v-else>
                             <div class="cart-product-price">{{ item.price | rupiah }}</div>
                         </div>
                         <div class="quantity">

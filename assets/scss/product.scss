@@ -1,0 +1,12 @@
+.product {
+    @media screen and (max-width: 48em) {
+        font-size: 23px;
+    }
+}
+
+.button-view-product {
+    margin-top: 12px;
+    @media screen and (max-width: 48em) {
+        margin-bottom: 20px;
+    }
+}

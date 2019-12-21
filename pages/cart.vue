@@ -43,7 +43,7 @@
                                     />
                                 </div>
                                 <div class="col-md-4 col-sm-12">
-                                    <div class="coupon">
+                                    <!-- <div class="coupon">
                                         <label class="coupon_code">Coupon Code:</label>
                                         <div class="coupon-wrapp">
                                             <input
@@ -53,7 +53,7 @@
                                             />
                                             <a href="#" class="button"></a>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="cart-wrap-summary">
                                         <div class="cart-total-checkout">
                                             <div class="cart-total-item">
@@ -76,18 +76,13 @@
                                             class="button btn-continue-shopping"
                                             >CONTINUE SHOPPING</nuxt-link>-->
 
-                                            <!-- <button
+                                            <button
                                                 v-if="!userIsAuthorized"
                                                 @click="warnSignIn"
                                                 class="button button-checkout btn-cart-to-checkout"
                                             >CHECKOUT NOW</button>
                                             <nuxt-link
                                                 v-else
-                                                :to="`/checkout`"
-                                                tag="button"
-                                                class="button button-checkout btn-cart-to-checkout"
-                                            >CHECKOUT NOW</nuxt-link>-->
-                                            <nuxt-link
                                                 :to="`/checkout`"
                                                 tag="button"
                                                 class="button button-checkout btn-cart-to-checkout"
@@ -130,7 +125,7 @@ export default {
         warnSignIn() {
             this.$swal({
                 title: 'Oops!',
-                text: 'Please sign in to continue',
+                text: 'Please sign in to checkout',
                 type: 'warning'
             }).then(() => {
                 this.$store.dispatch('authentication/auth0Login')

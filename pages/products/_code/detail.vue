@@ -451,33 +451,63 @@
                                             style="padding:10px;padding-bottom: 15px;"
                                             :key="product.kode_barang"
                                         >
-                                            <div
+                                            <nuxt-link
+                                                tag="div"
+                                                :to="`/products/${product.kode_barang}/detail`"
                                                 class="product-inner equal-element"
                                                 style="border-radius: 6px;border:none;"
                                             >
+                                                <!-- <div class="product-top">
+                                                    <div class="flash">
+                                                        <span class="onnew">
+                                                            <span class="text">new</span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="yith-wcwl-add-to-wishlist">
+                                                        <div class="yith-wcwl-add-button">
+                                                            <a href="#" tabindex="0">Add to Wishlist</a>
+                                                        </div>
+                                                    </div>
+                                                </div> -->
                                                 <div class="product-thumb">
                                                     <div class="thumb-inner">
-                                                        <a href="#">
-                                                            <img
-                                                                :src="`${$axios.defaults.baseURL}assets/img/thumbnails/${product.pic}.jpg`"
-                                                                :alt="product.nama"
-                                                                style="display: unset;"
-                                                            />
-                                                        </a>
+                                                        <img
+                                                            :src="`${$axios.defaults.baseURL}assets/img/thumbnails/${product.pic}.jpg`"
+                                                            :alt="product.nama"
+                                                            style="display: unset;"
+                                                        />
                                                     </div>
                                                 </div>
                                                 <div class="text-center">
-                                                    <h5 class="product-name product_title">
+                                                    <h5
+                                                        class="product-name product_title"
+                                                        style="height: 44px; overflow: hidden;margin-bottom: 14px;"
+                                                    >
                                                         <a href="#">{{ product.nama }}</a>
                                                     </h5>
                                                     <div class="group-info">
-                                                        <div class="price">
-                                                            <!-- <del>€65</del> -->
-                                                            <ins>{{ product.harga | rupiah }}</ins>
+                                                        <div v-if="product.harga_diskon > 0 && product.harga > product.harga_diskon"
+                                                            class="price text-center"
+                                                            style="display:flex;flex-direction:column"
+                                                        >
+                                                            <del
+                                                                style="margin-right: 0px;"
+                                                            >{{ product.harga | rupiah }}</del>
+                                                            <ins
+                                                                style="margin-bottom: 8px"
+                                                            >{{ product.harga | rupiah }}</ins>
+                                                        </div>
+                                                        <div v-else
+                                                            class="price text-center"
+                                                            style="display:flex;flex-direction:column"
+                                                        >
+                                                            <ins
+                                                                style="margin-bottom: 8px"
+                                                            >{{ product.harga | rupiah }}</ins>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </nuxt-link>
                                         </div>
                                     </slick>
                                 </div>

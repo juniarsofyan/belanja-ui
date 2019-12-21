@@ -195,7 +195,8 @@ export default {
         '@/assets/css/style-custom.css',
         '@/assets/css/swiper.css',
         // '@/assets/scss/main.scss',
-        { src: '@/assets/scss/main.scss', lang: 'scss' }
+        { src: '@/assets/scss/main.scss', lang: 'scss' },
+        { src: '@/assets/scss/product.scss', lang: 'scss' }
     ],
     /*
      ** Plugins to load before mounting the App
