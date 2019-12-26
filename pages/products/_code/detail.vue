@@ -115,7 +115,7 @@
                                         target="_blank"
                                     >
                                         <i class="fab fa-whatsapp logo_bc"></i>&nbsp;
-                                        Contact Beauty Consultant Bellezkin
+                                        Contact Beauty Consultant
                                     </a>
                                 </div>
 

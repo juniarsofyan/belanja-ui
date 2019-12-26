@@ -66,7 +66,7 @@
                                                 <div>Grand Total</div>
                                                 <div
                                                     class="cart-total-value"
-                                                >{{ subtotal | rupiah }}</div>
+                                                >{{ grand_total | rupiah }}</div>
                                             </div>
                                         </div>
                                         <div class="control-cart">
@@ -114,12 +114,11 @@ export default {
     },
     computed: {
         ...mapGetters('authentication', ['userIsAuthorized']),
-        items: function() {
-            return this.$store.getters['cart/items']
-        },
-        subtotal: function() {
-            return this.$store.getters['cart/subtotal']
-        }
+        ...mapGetters('cart', [
+            'items',
+            'subtotal',
+            'grand_total'
+        ])
     },
     methods: {
         warnSignIn() {

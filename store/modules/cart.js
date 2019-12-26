@@ -49,7 +49,7 @@ const cart = {
             if (item_exists) {
                 item_exists.qty = parseInt(item.qty)
                 item_exists.subtotal = parseInt(item.qty) * parseInt(item_exists.price)
-                item_exists.grand_total = parseInt(item_exists.grand_total) + parseInt(item_exists.price_discount) * parseInt(item.qty)
+                item_exists.grand_total = parseInt(item_exists.price_discount) ? parseInt(item_exists.price_discount) * parseInt(item.qty) : parseInt(item_exists.price) * parseInt(item.qty)
                 item_exists.total_weight = parseInt(item.qty) * item_exists.weight
                 item_exists.total_poin = parseInt(item.qty) * item_exists.poin
             } else {

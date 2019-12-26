@@ -138,7 +138,7 @@
                                     </div>
                                 </div>
 
-                                <div class="block-search block-header turan-dropdown">
+                                <div class="block-search block-header turan-dropdown" title="Search">
                                     <a
                                         href="javascript:void(0);"
                                         class="popup-live-search-button"
@@ -153,53 +153,31 @@
                                                 <input
                                                     type="text"
                                                     class="input"
-                                                    placeholder="Your search here"
+                                                    placeholder="e.g. product code, name or category"
                                                     v-model="keyword"
                                                 />
                                                 <nuxt-link
                                                     :to="`/products/search?keyword=${keyword}`"
                                                     tag="button"
                                                     class="btn-search"
-                                                >Searchs</nuxt-link>
+                                                >Search</nuxt-link>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
 
-                                <div class="block-account block-header turan-dropdown">
+                                <div class="block-account block-header turan-dropdown" @click="auth0Login()" v-if="!userIsAuthorized">
+                                    <a href="javascript:void(0);" title="Log In">
+                                        <feather type="lock"></feather>
+                                    </a>
+                                </div>
+
+                                <div class="block-account block-header turan-dropdown" v-else>
                                     <a href="javascript:void(0);" data-turan="turan-dropdown">
                                         <i class="fa fa-user-o" aria-hidden="true"></i>
                                     </a>
                                     <div class="header-account turan-submenu">
-                                        <div class="header-user-form-tabs" v-if="!userIsAuthorized">
-                                            <!-- <ul class="tab-link">
-                                                <li class="active">
-                                                    <a
-                                                        data-toggle="tab"
-                                                        aria-expanded="true"
-                                                        href="#header-tab-login"
-                                                    >You have not login</a>
-                                                </li>
-                                            </ul>-->
-                                            <div class="tab-container" style="padding: 20px 20px;">
-                                                <div
-                                                    id="header-tab-login"
-                                                    class="tab-panel active text-center"
-                                                >
-                                                    <input
-                                                        type="button"
-                                                        class="button"
-                                                        value="Login"
-                                                        @click="auth0Login()"
-                                                    />
-                                                    <!-- <button
-                                                        class="button btn-outline"
-                                                        @click="auth0Login()"
-                                                    >Register</button> -->
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="header-user-form-tabs" v-else>
+                                        <div class="header-user-form-tabs">
                                             <ul class="submenu submenu-profile">
                                                 <li class="menu-item">
                                                     <nuxt-link
