@@ -23,24 +23,27 @@
                             <div class="turan-custommenu default">
                                 <h2 class="widgettitle">Links</h2>
                                 <ul class="menu">
-                                    <li class="menu-item">
-                                        <a href="/">Home</a>
-                                    </li>
-                                    <li class="menu-item">
-                                        <a href="./brightening">Brightening</a>
-                                    </li>
-                                    <li class="menu-item">
-                                        <a href="./purify">Purify</a>
-                                    </li>
-                                    <li class="menu-item">
-                                        <a href="./decorative">Decorative</a>
-                                    </li>
-                                    <li class="menu-item">
-                                        <a href="./extra care">Extra Care</a>
-                                    </li>
-                                    <li class="menu-item">
-                                        <a href="./promo">Promo</a>
-                                    </li>
+                                    <nuxt-link to="/" tag="li" class="menu-item">
+                                        <a href="#" title="Home">Home</a>
+                                    </nuxt-link>
+                                    <nuxt-link to="/products/brightening" tag="li" class="menu-item">
+                                        <a href="#" title="Brightening">Brightening</a>
+                                    </nuxt-link>
+                                    <nuxt-link to="/products/purify" tag="li" class="menu-item">
+                                        <a href="#" title="Purify">Purify</a>
+                                    </nuxt-link>
+                                    <nuxt-link to="/products/decorative" tag="li" class="menu-item">
+                                        <a href="#" title="Decorative">Decorative</a>
+                                    </nuxt-link>
+                                    <nuxt-link to="/products/extra care" tag="li" class="menu-item">
+                                        <a href="#" title="Extra Care">Extra Care</a>
+                                    </nuxt-link>
+                                    <nuxt-link to="/products/series" tag="li" class="menu-item">
+                                        <a href="#" title="Series">Series</a>
+                                    </nuxt-link>
+                                    <!-- <nuxt-link to="/products/promo" tag="li" class="menu-item">
+                                        <a href="#" title="Promo">Promo</a>
+                                    </nuxt-link>-->
                                 </ul>
                             </div>
                         </div>
@@ -60,9 +63,9 @@
                                     <li class="menu-item">
                                         <a href="/return-policy">Return Policy</a>
                                     </li>
-                                    <li class="menu-item">
+                                    <!-- <li class="menu-item">
                                         <b><a href="/track-shipment">#TrackShipment</a></b>
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </div>
                         </div>
@@ -81,11 +84,6 @@
                                             target="_blank"
                                             >
                                             <i class="icon fa fa-facebook-square"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="social-item" target="_blank">
-                                            <i class="icon fa fa-twitter"></i>
                                         </a>
                                     </li>
                                     <li>
