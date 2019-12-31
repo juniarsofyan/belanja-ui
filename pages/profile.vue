@@ -339,7 +339,7 @@ export default {
 
                     this.$store.dispatch('checkout/setDeliveryAddress', result.id)
                 } else {
-                    this.shipping_address_Zid = false
+                    this.shipping_address_id = false
                     
                     this.province = {
                         province_id : false,
