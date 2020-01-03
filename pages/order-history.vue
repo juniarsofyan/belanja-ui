@@ -1,6 +1,13 @@
 <template>
     <div>
+        <div v-if="!order_histories">
+            <div class="text-center">
+                <img src="~/assets/images/svg/no-transactions.svg" style="width:300px;" /><br/><br/>
+                You have no transactions history. Click <nuxt-link to="/" style="color:pink;"> <b>here</b> </nuxt-link> to continue shopping.
+            </div>
+        </div>
         <div
+            v-else
             v-for="order in order_histories"
             :key="order.transaction.transaksi_id"
             class="list-order-history"
@@ -133,7 +140,7 @@
 
 <script>
 export default {
-    // middleware: ['traffics'],
+    middleware: ['affiliation', 'authorization'],
     layout: 'products',
     components: {
         OrderBreadcrumb: () => import('@/components/OrderBreadcrumb.vue')

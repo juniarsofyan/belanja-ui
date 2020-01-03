@@ -21,20 +21,7 @@
                 <div class="row">
                     <div class="main-content-cart main-content">
                         <div class="page-main-content">
-                            <div class="shoppingcart-content">
-                                <!-- <form action="shoppingcart.html" class="cart-form">
-                                    <table class="shop_table">
-                                        <thead>
-                                            <tr>
-                                                <th class="product-remove"></th>
-                                                <th class="product-thumbnail"></th>
-                                                <th class="product-name"></th>
-                                                <th class="product-price"></th>
-                                                <th class="product-quantity"></th>
-                                                <th class="product-subtotal"></th>
-                                            </tr>
-                                        </thead>
-                                <tbody>-->
+                            <div class="shoppingcart-content" v-if="items.length > 0">
                                 <div class="col-md-8 col-sm-12">
                                     <CartItem
                                         v-for="item in items"
@@ -70,12 +57,6 @@
                                             </div>
                                         </div>
                                         <div class="control-cart">
-                                            <!-- <nuxt-link
-                                            :to="`/`"
-                                            tag="button"
-                                            class="button btn-continue-shopping"
-                                            >CONTINUE SHOPPING</nuxt-link>-->
-
                                             <button
                                                 v-if="!userIsAuthorized"
                                                 @click="warnSignIn"
@@ -90,9 +71,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- </tbody>
-                                </table>-->
-                                <!-- </form> -->
+                            </div>
+                            <div class="shoppingcart-content text-center" v-else >
+                                <img src="~/assets/images/svg/empty-cart.svg" style="width:300px;" /><br/><br/>
+                                <b><h3>Oops...</h3></b>
+                                <!-- Belum ada item didalam shopping cart, silahkan tambahkan item terlebih dahulu. -->
+                                You have no items in you shopping cart. Click <nuxt-link to="/" style="color:pink;"> <b>here</b> </nuxt-link> to continue shopping.
                             </div>
                         </div>
                     </div>
