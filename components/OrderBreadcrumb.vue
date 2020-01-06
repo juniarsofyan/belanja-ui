@@ -41,36 +41,38 @@
                         <span class="order-track-text-stat">Payment Confirmed</span>
                     </div>
                 </div>
-                <div 
-                    class="order-track-step"
-                    :class="!isDone('PACKED') ? 'disabled' : ''"
-                    :title="isDone('PACKED') ? getDate('PACKED') : ''"
-                >
-                    <div class="order-track-status">
-                        <span class="order-track-status-dot"></span>
-                        <span class="order-track-status-line"></span>
+                <template v-if="shipping_method == 'EXPEDITION'">
+                    <div 
+                        class="order-track-step"
+                        :class="!isDone('PACKED') ? 'disabled' : ''"
+                        :title="isDone('PACKED') ? getDate('PACKED') : ''"
+                    >
+                        <div class="order-track-status">
+                            <span class="order-track-status-dot"></span>
+                            <span class="order-track-status-line"></span>
+                        </div>
+                        <div class="order-track-text">
+                            <span class="order-track-text-stat">Packed</span>
+                        </div>
                     </div>
-                    <div class="order-track-text">
-                        <span class="order-track-text-stat">Packed</span>
+                    <div 
+                        class="order-track-step"
+                        :class="!isDone('SHIPPED') ? 'disabled' : ''"
+                        :title="isDone('SHIPPED') ? getDate('SHIPPED') : ''"
+                    >
+                        <div class="order-track-status">
+                            <span class="order-track-status-dot"></span>
+                            <span class="order-track-status-line"></span>
+                        </div>
+                        <div class="order-track-text">
+                            <span class="order-track-text-stat">Shipped</span>
+                            <span class="order-track-text-sub" v-if="receipt_number">
+                                No. resi
+                                <b> {{ receipt_number }} </b>
+                            </span>
+                        </div>
                     </div>
-                </div>
-                <div 
-                    class="order-track-step"
-                    :class="!isDone('SHIPPED') ? 'disabled' : ''"
-                    :title="isDone('SHIPPED') ? getDate('SHIPPED') : ''"
-                >
-                    <div class="order-track-status">
-                        <span class="order-track-status-dot"></span>
-                        <span class="order-track-status-line"></span>
-                    </div>
-                    <div class="order-track-text">
-                        <span class="order-track-text-stat">Shipped</span>
-                        <span class="order-track-text-sub" v-if="receipt_number">
-                            No. resi
-                            <b> {{ receipt_number }} </b>
-                        </span>
-                    </div>
-                </div>
+                </template>
                 <div 
                     class="order-track-step"
                     :class="!isDone('RECEIVED') ? 'disabled' : ''"
@@ -91,7 +93,7 @@
 
 <script>
 export default {
-    props: ['progresses', 'receipt_number'],
+    props: ['progresses', 'receipt_number', 'shipping_method'],
     methods: {
         isDone(progress_name) {
             return this.progresses.find((element) => element.keterangan == progress_name)

@@ -41,17 +41,7 @@
                     <!-- media box -->
                     <div class="details-product single-product-galery">
                         <div class="details-thumd">
-                            <div
-                                class="image-preview-container image-thick-box image_preview_container"
-                            >
-                                <img
-                                    id="img_zoom"
-                                    :data-zoom-image="`${$axios.defaults.baseURL}assets/img/products/${product.pic}.jpg`"
-                                    :src="`${$axios.defaults.baseURL}assets/img/products/${product.pic}.jpg`"
-                                    alt
-                                />
-                            </div>
-                            <div class="product_preview image-small"></div>
+							<img :src="`${$axios.defaults.baseURL}assets/img/products/${product.pic}.jpg`" />
                         </div>
                         <div class="details-infor">
                             <h1 class="product-title">{{ product.nama }}</h1>
@@ -59,7 +49,11 @@
                                 Product Code:
                                 <a href="#">{{ product.kode_barang }}</a>
                             </div>
-                            <div class="price">
+                            <div class="price" v-if="product.harga_diskon > 0 && product.harga > product.harga_diskon">
+                                <span class="old-price"><small>{{ product.harga | rupiah }}</small></span><br/>
+                                <span>{{ product.harga_diskon | rupiah }}</span>
+                            </div>
+                            <div class="price" v-else>
                                 <span>{{ product.harga | rupiah }}</span>
                             </div>
                             <div class="product-details-description">
@@ -451,59 +445,32 @@
                                             style="padding:10px;padding-bottom: 15px;"
                                             :key="product.kode_barang"
                                         >
-                                            <nuxt-link
-                                                tag="div"
-                                                :to="`/products/${product.kode_barang}/detail`"
+                                            <nuxt-link tag="div" :to="`/products/${product.kode_barang}/detail`"
                                                 class="product-inner equal-element"
                                                 style="border-radius: 6px;border:none;"
                                             >
-                                                <!-- <div class="product-top">
-                                                    <div class="flash">
-                                                        <span class="onnew">
-                                                            <span class="text">new</span>
-                                                        </span>
-                                                    </div>
-                                                    <div class="yith-wcwl-add-to-wishlist">
-                                                        <div class="yith-wcwl-add-button">
-                                                            <a href="#" tabindex="0">Add to Wishlist</a>
-                                                        </div>
-                                                    </div>
-                                                </div> -->
                                                 <div class="product-thumb">
                                                     <div class="thumb-inner">
-                                                        <img
-                                                            :src="`${$axios.defaults.baseURL}assets/img/thumbnails/${product.pic}.jpg`"
-                                                            :alt="product.nama"
-                                                            style="display: unset;"
-                                                        />
+                                                        <a href="#">
+                                                            <img
+                                                                :src="`${$axios.defaults.baseURL}assets/img/thumbnails/${product.pic}.jpg`"
+                                                                :alt="product.nama"
+                                                                style="display: unset;"
+                                                            />
+                                                        </a>
                                                     </div>
                                                 </div>
                                                 <div class="text-center">
                                                     <h5
                                                         class="product-name product_title"
-                                                        style="height: 44px; overflow: hidden;margin-bottom: 14px;"
+                                                        style="height: 44px; overflow: hidden;"
                                                     >
                                                         <a href="#">{{ product.nama }}</a>
                                                     </h5>
                                                     <div class="group-info">
-                                                        <div v-if="product.harga_diskon > 0 && product.harga > product.harga_diskon"
-                                                            class="price text-center"
-                                                            style="display:flex;flex-direction:column"
-                                                        >
-                                                            <del
-                                                                style="margin-right: 0px;"
-                                                            >{{ product.harga | rupiah }}</del>
-                                                            <ins
-                                                                style="margin-bottom: 8px"
-                                                            >{{ product.harga | rupiah }}</ins>
-                                                        </div>
-                                                        <div v-else
-                                                            class="price text-center"
-                                                            style="display:flex;flex-direction:column"
-                                                        >
-                                                            <ins
-                                                                style="margin-bottom: 8px"
-                                                            >{{ product.harga | rupiah }}</ins>
+                                                        <div class="price">
+                                                            <!-- <del>€65</del> -->
+                                                            <ins>{{ product.harga | rupiah }}</ins>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -696,5 +663,9 @@
 <style>
 	.custom_blog_title {
 		text-transform: captialize;
+	}
+	.old-price {
+		text-decoration: line-through;
+		color: grey;
 	}
 </style>

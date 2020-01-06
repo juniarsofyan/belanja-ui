@@ -5,18 +5,18 @@
         class="product-item product-type-variable col-lg-3 col-md-4 col-sm-6 col-xs-6 style-1"
     >
         <div class="product-inner equal-element">
-            <!-- <div class="product-top">
-        <div class="flash">
-          <span class="onnew">
-            <span class="text">{{product.promo_caption}}</span>
-          </span>
-        </div>
-        <div class="yith-wcwl-add-to-wishlist">
-          <div class="yith-wcwl-add-button">
-            <a href="#">Add to Wishlist</a>
-          </div>
-        </div>
-            </div>-->
+            <div class="product-top">
+                <div class="flash">
+                    <span class="onnew">
+                        <span class="text promo-caption">{{ product.promo_caption ? product.promo_caption : "&nbsp;" }}</span>
+                    </span>
+                </div>
+                <!-- <div class="yith-wcwl-add-to-wishlist">
+                    <div class="yith-wcwl-add-button">
+                        <a href="#">Add to Wishlist</a>
+                    </div>
+                </div> -->
+            </div>
             <div class="product-thumb">
                 <div class="thumb-inner">
                     <a href="#">
@@ -39,6 +39,7 @@
             </div>
             <div class="count-star">(7)</div>
                     </div>-->
+
                     <div class="price" v-if="product.harga_diskon > 0 && product.harga > product.harga_diskon">
                         <del>{{ product.harga | rupiah }}</del>
                         <ins>{{ product.harga_diskon | rupiah }}</ins>
@@ -119,3 +120,10 @@ export default {
     }
 }
 </script>
+
+<style>
+.promo-caption {
+    color: red;
+    text-align: right;
+}
+</style>

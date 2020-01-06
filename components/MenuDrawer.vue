@@ -24,6 +24,9 @@
                     <nuxt-link to="/products/series" tag="li" class="menu-item">
                         <a href="#" class="kt-item-title" title="Series">Series</a>
                     </nuxt-link>
+                    <li class="menu-item" @click="auth0Logout">
+                        <a href="#" class="kt-item-title" title="Logout">Logout</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -31,61 +34,8 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations, mapActions } from 'vuex'
 export default {
-    data() {
-        return {
-            user_data: window.localStorage.getItem('user_data')
-                ? JSON.parse(window.localStorage.getItem('user_data'))
-                : [],
-            loginForm: {
-                email: '',
-                password: ''
-            },
-            registerForm: {
-                name: '',
-                email: '',
-                password: ''
-            },
-            keyword: '' // this.$route.query.keyword
-        }
-    },
-    computed: {
-        ...mapGetters('authentication', ['userIsAuthorized']),
-        ...mapGetters('profile', ['personal']),
-        cart_count: function() {
-            return this.$store.getters['cart/count']
-        },
-        items: function() {
-            return this.$store.getters['cart/items']
-        },
-        subtotal: function() {
-            return this.$store.getters['cart/subtotal']
-        }
-    },
     methods: {
-        removeItem: function(product_code) {
-            this.$store.dispatch('cart/removeItem', product_code)
-        },
-        getUserProfile() {
-            this.$axios
-                .post(`${process.env.API_BASE_URL}profile/get`, {
-                    email: this.loginForm.email
-                })
-                .then((response) => {
-                    this.$store.dispatch('profile/updateProfile', {
-                        member_no: response.data.data.no_member,
-                        nik: response.data.data.nik,
-                        name: response.data.data.nama,
-                        birthdate: response.data.data.tgl_lahir,
-                        phone: response.data.data.telp,
-                        email: response.data.data.email
-                    })
-                })
-        },
-        auth0Login() {
-            this.$store.dispatch('authentication/auth0Login')
-        },
         auth0Logout() {
             this.$store.dispatch('authentication/auth0Logout')
             this.$store.dispatch('checkout/reset')

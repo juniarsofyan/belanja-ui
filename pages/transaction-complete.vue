@@ -15,7 +15,7 @@
                             <div class="sub-title">
                                 If you don't make a payment in 24 hours, the transaction will automatically canceled.
                             </div>
-                            <nuxt-link :to="`/`" tag="a" class="button btn-return">Return to Store</nuxt-link>
+                            <nuxt-link :to="`/order-history`" tag="a" class="button btn-return">View your orders</nuxt-link>
                         </div>
                     </div>
 
