@@ -22,7 +22,7 @@
 
                         <div class="tab-container">
                             <div id="profil" class="tab-panel active">
-                                <div class="col-md-10 col-md-offset-1">
+                                <div class="col-md-12">
                                     <div class="shipping-address-form-wrapp">
                                         <div
                                             class="shipping-address-form checkout-form"
@@ -30,36 +30,110 @@
                                         >
                                             <div class="col-12">
                                                 <div class="shipping-address">
-                                                    <nuxt-link :to="`/profile`">My Profile</nuxt-link> |
-                                                    <nuxt-link :to="`/profile/addresses`">Addresses list</nuxt-link> |
-                                                    <nuxt-link :to="`/profile/addresses/add`">Add New address</nuxt-link>
+
+                                                    <div class="tab-base mt-4" id="tab-program">
+                                                        <ul class="nav nav-justified nav-base" id="tab" role="tablist">
+                                                            <li class="nav-item">
+                                                                    <nuxt-link class="nav-link py-3" id="detail-tab" data-toggle="tab"
+                                                                    role="tab" aria-controls="detail" aria-selected="true" :to="`/profile`">My Profile</nuxt-link>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <nuxt-link class="nav-link py-3" id="detail-tab" data-toggle="tab"
+                                                                role="tab" aria-controls="detail" aria-selected="true" :to="`/profile/addresses`">Addresses list</nuxt-link>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <nuxt-link class="nav-link py-3" id="detail-tab" data-toggle="tab"
+                                                                role="tab" aria-controls="detail" aria-selected="true" :to="`/profile/addresses/add`">Add New address</nuxt-link>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                     <br/><br/>
 
                                                     <div v-if="shipping_addresses.length > 0">
-                                                        <div v-if="!defaultShippingAddressAvailable" class="text-center">
-                                                            <br/>
-                                                            <p style="color:red;font-style:italic;font-weight:bold;">
-                                                                NOTE: You haven't set a default shipping address. Please set a default shipping address below!
-                                                            </p>
-                                                            <br/>
+                                                        <div>
+                                                            <div v-if="!defaultShippingAddressAvailable" class="text-center">
+                                                                <br/>
+                                                                <p style="color:red;font-style:italic;font-weight:bold;">
+                                                                    NOTE: You haven't set a default shipping address. Please set a default shipping address below!
+                                                                </p>
+                                                                <br/>
+                                                            </div>
                                                         </div>
-                                                        <div v-for="address in shipping_addresses" :key="address.id">
-                                                            <!-- Id : {{ address.id }} <br/> -->
-                                                            Nama : {{ address.nama }} <br/>
-                                                            Telepon : {{ address.telepon }} <br/>
-                                                            Provinsi : {{ address.provinsi_nama }} <br/>
-                                                            Kota : {{ address.kota_nama }} <br/>
-                                                            Kecamatan : {{ address.kecamatan_nama }} <br/>
-                                                            Alamat : {{ address.alamat }} <br/>
-                                                            Kode pos : {{ address.kode_pos }} <br/>
-                                                            <!-- Is default? : {{ address.is_default }} <br/> -->
-                                                            <nuxt-link :to="`/profile/addresses/${address.id}/edit`" tag="button">Edit</nuxt-link> 
-                                                            <button class="btn-danger" @click="deleteShippingAddress(address.id)">Delete</button><br/>
-                                                            <button v-if="address.is_default == 0" @click="setDefaultShippingAddress(address.id)">Set as default</button><br/>
-                                                            <br/>
+                                                        <div v-if="!isMobile()">
+                                                            <div class="table-container" role="table" aria-label="Destinations">
+                                                                <div class="flex-table header" role="rowgroup" style="background-color:#eee;">
+                                                                    <div class="flex-row first header text-center" role="columnheader">Personal Info</div>
+                                                                    <div class="flex-row header text-center" role="columnheader">Address</div>
+                                                                    <div class="flex-row header text-center" role="columnheader"></div>
+                                                                    <div class="flex-row header text-center" role="columnheader">Actions</div>
+                                                                </div>
+                                                                <div v-for="address in shipping_addresses" :key="address.id" class="flex-table" role="rowgroup">
+                                                                    <div class="flex-row first" role="cell">
+                                                                        <div>
+                                                                            <!-- <input type="radio" name="address_default" id=""> -->
+                                                                            <div>
+                                                                                <b>{{ address.nama }}</b>
+                                                                                <div>
+                                                                                    {{ address.telepon }}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="flex-row" role="cell">
+                                                                        {{ address.alamat }}, {{ 'Kec. ' + address.kecamatan_nama }}, {{ address.kota_nama }}, {{ address.kode_pos }}, {{ address.provinsi_nama }}
+                                                                    </div>
+                                                                    <div class="flex-row" role="cell"> </div>
+                                                                    <div class="flex-row text-right" role="cell">
+                                                                        <!-- <nuxt-link :to="`/profile/addresses/${address.id}/edit`" tag="button">Edit</nuxt-link> -->
+                                                                        <nuxt-link :to="`/profile/addresses/${address.id}/edit`">
+                                                                            <feather type="edit" size="1em" stroke="orange"></feather>
+                                                                            Edit
+                                                                        </nuxt-link>
+                                                                        &nbsp;
+                                                                        <a href="#" @click.prevent="deleteShippingAddress(address.id)" style="align-self: center;">
+                                                                            <feather type="trash" size="1em" stroke="red"></feather>
+                                                                            Delete
+                                                                        </a>
+                                                                        &nbsp;
+                                                                        <a href="#" v-if="address.is_default == 0" @click.prevent="setDefaultShippingAddress(address.id)">
+                                                                            <feather type="check" size="1em" stroke="blue"></feather>
+                                                                            <b>Set default</b>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div v-else>
+                                                            <div v-for="address in shipping_addresses" :key="address.id" class="card-ontable" role="rowgroup">
+                                                                <div>
+                                                                    <b>{{ address.nama }}</b>
+                                                                    <div>
+                                                                        {{ address.telepon }}
+                                                                    </div>
+                                                                </div>
+                                                                <div>
+                                                                    {{ address.alamat }}, {{ address.kecamatan_nama }}. {{ address.kota_nama }}
+                                                                </div>
+                                                                <div class="action-card-ontable">
+                                                                    <a href="#" v-if="address.is_default == 0" @click.prevent="setDefaultShippingAddress(address.id)" class="button">
+                                                                        <b>Set default</b>
+                                                                    </a>
+                                                                    <div v-else class="button" style="background-color:#dedede">
+                                                                        <b style="color:#6f6f6f">Now Used</b>
+                                                                    </div>
+                                                                    &nbsp;
+                                                                    <nuxt-link :to="`/profile/addresses/${address.id}/edit`" style="align-self: center;">
+                                                                        <feather type="edit" size="1em" stroke="orange"></feather>
+                                                                    </nuxt-link>
+                                                                    &nbsp;
+                                                                    <a href="#" @click.prevent="deleteShippingAddress(address.id)" style="align-self: center;">
+                                                                        <feather type="trash" size="1em" stroke="red"></feather>
+                                                                    </a><br/>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div class="text-center" v-else>
+                                                    <div v-else class="text-center">
                                                         <img src="~/assets/images/svg/no-addresses.svg" style="width:200px;" /><br/><br/>
                                                             <b><h3>Oops...</h3></b>
                                                             You have no shipping address. Click <nuxt-link to="/profile/addresses/add" style="color:pink;"> <b>here</b> </nuxt-link> to add new.
@@ -112,7 +186,17 @@ export default {
             return false
         }
     },
+    created() {
+        this.getShippingAddresses()
+    },
     methods: {
+        isMobile() {
+            if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                return true
+            } else {
+                return false
+            }
+        },
         getShippingAddresses() {
             this.$axios.post(`shipping-address/all`, {
                 email: this.user_data.email
@@ -208,10 +292,7 @@ export default {
                     })
                 }
             })
-        },
-    },
-    created() {
-        this.getShippingAddresses()
+        }
     }
 }
 </script>

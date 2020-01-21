@@ -29,7 +29,7 @@
                                 <div class="shipping-address">
                                     <h3 class="title-form">Checkout</h3>
                                     <p class="form-row form-row-first">
-                                        <label class="text">Select SPB (Sales Point Branch)</label>
+                                        <label class="text" for="branches">Select SPB (Sales Point Branch)</label>
                                         <!-- class="chosen-select" -->
                                         <select style="width:100%;" data-placeholder="-- Choose SPB --" id="branches"
                                             ref="branches" v-model="branch">
@@ -105,6 +105,14 @@
                                             You haven't set a default shipping address. <br/>
                                             Please set a default shipping address <nuxt-link to="/profile/addresses" style="text-decoration:underline;"> <b>here</b> </nuxt-link>.
                                             <!-- <button class="btn-sm" @click="showModal=true">Add shipping address</button> -->
+                                        </p>
+                                    </div>
+                                </span>
+                                <span v-if="shipping_method == 'IMMEDIATE'">
+                                    <div class="shipping-address">
+                                        <p class="form-row form-row-first">
+                                            <label class="text" for="note">Note</label>
+                                            <textarea name="note" id="note" rows="5" v-model="note"></textarea>
                                         </p>
                                     </div>
                                 </span>
@@ -284,7 +292,8 @@
                 delivery_address: false,
                 default_shipping_address: "",
                 shipping_addresses: [],
-                sales_branches: [{
+                sales_branches: [
+                    {
                         code: '00000',
                         province_id: 9,
                         city_id: 23,
@@ -292,6 +301,26 @@
                         subdistrict_id: 359,
                         subdistrict_name: 'Lengkong',
                         phone: '+6282119163629',
+                        disabled: true
+                    },
+                    {
+                        code: '14',
+                        province_id: 9,
+                        city_id: 23,
+                        city_name: 'BANDUNG',
+                        subdistrict_id: 361,
+                        subdistrict_name: 'Panyileukan',
+                        phone: '-',
+                        disabled: true
+                    },
+                    {
+                        code: '13722',
+                        province_id: 9,
+                        city_id: 54,
+                        city_name: 'BEKASI',
+                        subdistrict_id: 733,
+                        subdistrict_name: 'Cikarang Selatan',
+                        phone: '-',
                         disabled: true
                     },
                     {
@@ -315,6 +344,26 @@
                         disabled: true
                     },
                     {
+                        code: '05624',
+                        province_id: 9,
+                        city_id: 104,
+                        city_name: 'CIANJUR',
+                        subdistrict_id: 1415,
+                        subdistrict_name: 'Cikalong',
+                        phone: '-',
+                        disabled: true
+                    },
+                    {
+                        code: '15658',
+                        province_id: 9,
+                        city_id: 115,
+                        city_name: 'DEPOK',
+                        subdistrict_id: 1585,
+                        subdistrict_name: 'Sawangan',
+                        phone: '-',
+                        disabled: true
+                    },
+                    {
                         code: '00539',
                         province_id: 34,
                         city_id: 278,
@@ -332,6 +381,27 @@
                         subdistrict_id: 5954,
                         subdistrict_name: 'Pelabuhan/Palabuhan Ratu',
                         phone: '+6281337479174',
+                        disabled: true
+                    },
+                    {
+                        code: '01835',
+                        province_id: 9,
+                        city_id: 376,
+                        city_name: 'PURWAKARTA',
+                        subdistrict_old_id: 5954,
+                        subdistrict_id: 5218,
+                        subdistrict_name: 'Bojong',
+                        phone: '-',
+                        disabled: true
+                    },
+                    {
+                        code: '01838',
+                        province_id: 10,
+                        city_id: 41,
+                        city_name: 'PURWOKERTO',
+                        subdistrict_id: 591,
+                        subdistrict_name: 'Purwokerto Timur',
+                        phone: '+6283818235538',
                         disabled: true
                     },
                     {
@@ -355,62 +425,12 @@
                         disabled: true
                     },
                     {
-                        code: '01838',
-                        province_id: 10,
-                        city_id: 41,
-                        city_name: 'PURWOKERTO',
-                        subdistrict_id: 591,
-                        subdistrict_name: 'Purwokerto Timur',
-                        phone: '+6283818235538',
-                        disabled: true
-                    },
-                    {
-                        code: '15666',
+                        code: '00004',
                         province_id: 3,
                         city_id: 457,
                         city_name: 'TANGERANG SELATAN',
-                        subdistrict_id: 6312,
-                        subdistrict_name: 'Pamulang',
-                        phone: '-',
-                        disabled: true
-                    },
-                    {
-                        code: '15658',
-                        province_id: 9,
-                        city_id: 115,
-                        city_name: 'DEPOK',
-                        subdistrict_id: 1585,
-                        subdistrict_name: 'Sawangan',
-                        phone: '-',
-                        disabled: true
-                    },
-                    {
-                        code: '15641',
-                        province_id: 6,
-                        city_id: 154,
-                        city_name: 'Jakarta Timur',
-                        subdistrict_id: 2116,
-                        subdistrict_name: 'Duren Sawit',
-                        phone: '-',
-                        disabled: true
-                    },
-                    {
-                        code: '13722',
-                        province_id: 9,
-                        city_id: 54,
-                        city_name: 'Bekasi',
-                        subdistrict_id: 733,
-                        subdistrict_name: 'Cikarang Selatan',
-                        phone: '-',
-                        disabled: true
-                    },
-                    {
-                        code: '02006',
-                        province_id: 9,
-                        city_id: 126,
-                        city_name: 'Garut',
-                        subdistrict_id: 1751,
-                        subdistrict_name: 'Tarogong Kidul',
+                        subdistrict_id: 6313,
+                        subdistrict_name: 'Pondok Aren',
                         phone: '-',
                         disabled: true
                     }
@@ -431,6 +451,7 @@
                 'checkout', [
                     'branch',
                     'shipping_method',
+                    'note',
                     'courier',
                     'shipping_address',
                     'unique_code',
@@ -459,6 +480,14 @@
                 },
                 set(value) {
                     this.$store.dispatch('checkout/setShippingMethod', value)
+                }
+            },
+            note: {
+                get() {
+                    return this.$store.getters['checkout/note']
+                },
+                set(value) {
+                    this.$store.dispatch('checkout/setNote', value)
                 }
             },
             checkoutDataValidated() {
@@ -491,6 +520,7 @@
                     this.$store.dispatch('checkout/setDeliveryAddress', false)
                     this.setTotalPayment()
                 } else {
+                    this.$store.dispatch('checkout/setNote', "")
                     this.getDefaultShippingAddresses()
                 }
             },

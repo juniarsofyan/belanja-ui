@@ -1,5 +1,6 @@
 let branch = window.localStorage.getItem('branch')
 let shipping_method = window.localStorage.getItem('shipping_method')
+let note = window.localStorage.getItem('note')
 let shipping_address = window.localStorage.getItem('shipping_address')
 let courier = window.localStorage.getItem('courier')
 let shipment = window.localStorage.getItem('shipment')
@@ -12,6 +13,7 @@ const checkout = {
     state: {
         branch: branch ? JSON.parse(branch) : [],
         shipping_method: shipping_method ? shipping_method : false,
+        note: note ? note : false,
         shipping_address: shipping_address ? shipping_address : false,
         courier: courier ? courier : false,
         shipment: shipment ? JSON.parse(shipment) : false,
@@ -27,6 +29,10 @@ const checkout = {
         setShippingMethod(state, shipping_method) {
             state.shipping_method = shipping_method
             window.localStorage.setItem('shipping_method', shipping_method)
+        },
+        setNote(state, note) {
+            state.note = note
+            window.localStorage.setItem('note', note)
         },
         setShippingAddress(state, shipping_address) {
             state.shipping_address = shipping_address
@@ -61,6 +67,7 @@ const checkout = {
 
             state.branch = []
             state.shipping_method = false
+            state.note = false
             state.shipping_address = false
             state.courier = false
             state.shipment = false,
@@ -70,6 +77,7 @@ const checkout = {
 
             window.localStorage.removeItem('branch')
             window.localStorage.removeItem('shipping_method')
+            window.localStorage.removeItem('note')
             window.localStorage.removeItem('shipping_address')
             window.localStorage.removeItem('courier')
             window.localStorage.removeItem('shipment')
@@ -84,6 +92,9 @@ const checkout = {
         },
         shipping_method(state) {
             return state.shipping_method
+        },
+        note(state) {
+            return state.note
         },
         shipping_address(state) {
             return state.shipping_address
@@ -110,6 +121,9 @@ const checkout = {
         },
         setShippingMethod({ state, commit}, payload) {
             commit('setShippingMethod', payload)
+        },
+        setNote({ state, commit}, payload) {
+            commit('setNote', payload)
         },
         setShippingAddress({ state, commit}, payload) {
             commit('setShippingAddress', payload)

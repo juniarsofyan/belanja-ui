@@ -29,11 +29,7 @@
                                 <td class="item-order">
                                     <div class="row">
                                         <div class="col-md-2">
-                                            <img
-                                                :src="
-                                                    `${$axios.defaults.baseURL}assets/img/thumbnails/${item.pic}.jpg`
-                                                "
-                                            />
+                                            <img :src=" `${$axios.defaults.baseURL}assets/img/thumbnails/${item.pic}.jpg` " />
                                         </div>
                                         <div class="col-md-10">
                                             {{ item.nama }}
@@ -56,15 +52,15 @@
                             <!-- <tr>
                                 <td></td>
                             </tr>-->
-                            <tr>
+                            <!-- <tr>
                                 <td colspan align="right">
                                     <b>Subtotal</b>
                                 </td>
                                 <td>
                                     <b> {{ order.transaction.subtotal | rupiah }} </b>
                                 </td>
-                            </tr>
-                            <tr v-if="order.transaction.shipping_fee > 0">
+                            </tr> -->
+                            <tr v-if="order.transaction.metode_pengiriman == 'EXPEDITION'">
                                 <td colspan align="right">
                                     <b>Shipping</b>
                                 </td>
@@ -96,24 +92,28 @@
                     </table>
                     <div class="row" style="margin-bottom:1em">
                         <div class="col-md-12">
-                            <b>Ship from SPB:</b> <br />
+                            <b v-if="order.transaction.metode_pengiriman == 'EXPEDITION'">Shipped from SPB:</b> 
+                            <b v-else>Taken from SPB:</b> 
+                            <br />
                             {{ salesBranchDetail(order.transaction.kode_spb) }}
                         </div>
                     </div>
                     <div class="row section-desc-order">
                         <div class="col-md-9">
-                            <b>Ship to:</b>
-                            <br />
-                            <u>{{ order.transaction.nama }}</u>
-                            <br />
-                            {{ order.transaction.alamat }}
-                            <br />
-                            {{ order.transaction.provinsi_nama }},
-                            {{ order.transaction.kota_nama }} Kec.
-                            {{ order.transaction.kecamatan_nama }}
-                            <br />
-                            {{ order.transaction.kode_pos }}
-                            <br />
+                            <span v-if="order.transaction.metode_pengiriman == 'EXPEDITION'">
+                                <b>Ship to:</b>
+                                <br />
+                                <u>{{ order.transaction.nama }}</u>
+                                <br />
+                                {{ order.transaction.alamat }}
+                                <br />
+                                {{ order.transaction.provinsi_nama }},
+                                {{ order.transaction.kota_nama }} Kec.
+                                {{ order.transaction.kecamatan_nama }}
+                                <br />
+                                {{ order.transaction.kode_pos }}
+                                <br />
+                            </span>
                         </div>
 
                         <div class="col-md-3 text-right" style="display: flex; flex-direction: column; justify-content: space-between;">
@@ -132,7 +132,7 @@
                         </div>
                     </div>
                 </div>
-                <OrderBreadcrumb :progresses="order.progresses" :receipt_number="order.transaction.resi" />
+                <OrderBreadcrumb :progresses="order.progresses" :receipt_number="order.transaction.resi" :shipping_method="order.transaction.metode_pengiriman" />
             </div>
         </div>
     </div>
@@ -151,7 +151,8 @@ export default {
             transactions: [],
             order_progress: [],
             order_items: [],
-            sales_branches: [{
+            sales_branches: [
+                {
                     code: '00000',
                     province_id: 9,
                     city_id: 23,
@@ -159,6 +160,26 @@ export default {
                     subdistrict_id: 359,
                     subdistrict_name: 'Lengkong',
                     phone: '+6282119163629',
+                    disabled: true
+                },
+                {
+                    code: '14',
+                    province_id: 9,
+                    city_id: 23,
+                    city_name: 'BANDUNG',
+                    subdistrict_id: 361,
+                    subdistrict_name: 'Panyileukan',
+                    phone: '-',
+                    disabled: true
+                },
+                {
+                    code: '13722',
+                    province_id: 9,
+                    city_id: 54,
+                    city_name: 'BEKASI',
+                    subdistrict_id: 733,
+                    subdistrict_name: 'Cikarang Selatan',
+                    phone: '-',
                     disabled: true
                 },
                 {
@@ -182,6 +203,26 @@ export default {
                     disabled: true
                 },
                 {
+                    code: '05624',
+                    province_id: 9,
+                    city_id: 104,
+                    city_name: 'CIANJUR',
+                    subdistrict_id: 1415,
+                    subdistrict_name: 'Cikalong',
+                    phone: '-',
+                    disabled: true
+                },
+                {
+                    code: '15658',
+                    province_id: 9,
+                    city_id: 115,
+                    city_name: 'DEPOK',
+                    subdistrict_id: 1585,
+                    subdistrict_name: 'Sawangan',
+                    phone: '-',
+                    disabled: true
+                },
+                {
                     code: '00539',
                     province_id: 34,
                     city_id: 278,
@@ -199,6 +240,27 @@ export default {
                     subdistrict_id: 5954,
                     subdistrict_name: 'Pelabuhan/Palabuhan Ratu',
                     phone: '+6281337479174',
+                    disabled: true
+                },
+                {
+                    code: '01835',
+                    province_id: 9,
+                    city_id: 376,
+                    city_name: 'PURWAKARTA',
+                    subdistrict_old_id: 5954,
+                    subdistrict_id: 5218,
+                    subdistrict_name: 'Bojong',
+                    phone: '-',
+                    disabled: true
+                },
+                {
+                    code: '01838',
+                    province_id: 10,
+                    city_id: 41,
+                    city_name: 'PURWOKERTO',
+                    subdistrict_id: 591,
+                    subdistrict_name: 'Purwokerto Timur',
+                    phone: '+6283818235538',
                     disabled: true
                 },
                 {
@@ -222,62 +284,12 @@ export default {
                     disabled: true
                 },
                 {
-                    code: '01838',
-                    province_id: 10,
-                    city_id: 41,
-                    city_name: 'PURWOKERTO',
-                    subdistrict_id: 591,
-                    subdistrict_name: 'Purwokerto Timur',
-                    phone: '+6283818235538',
-                    disabled: true
-                },
-                {
-                    code: '15666',
+                    code: '00004',
                     province_id: 3,
                     city_id: 457,
                     city_name: 'TANGERANG SELATAN',
-                    subdistrict_id: 6312,
-                    subdistrict_name: 'Pamulang',
-                    phone: '-',
-                    disabled: true
-                },
-                {
-                    code: '15658',
-                    province_id: 9,
-                    city_id: 115,
-                    city_name: 'DEPOK',
-                    subdistrict_id: 1585,
-                    subdistrict_name: 'Sawangan',
-                    phone: '-',
-                    disabled: true
-                },
-                {
-                    code: '15641',
-                    province_id: 6,
-                    city_id: 154,
-                    city_name: 'Jakarta Timur',
-                    subdistrict_id: 2116,
-                    subdistrict_name: 'Duren Sawit',
-                    phone: '-',
-                    disabled: true
-                },
-                {
-                    code: '13722',
-                    province_id: 9,
-                    city_id: 54,
-                    city_name: 'Bekasi',
-                    subdistrict_id: 733,
-                    subdistrict_name: 'Cikarang Selatan',
-                    phone: '-',
-                    disabled: true
-                },
-                {
-                    code: '02006',
-                    province_id: 9,
-                    city_id: 126,
-                    city_name: 'Garut',
-                    subdistrict_id: 1751,
-                    subdistrict_name: 'Tarogong Kidul',
+                    subdistrict_id: 6313,
+                    subdistrict_name: 'Pondok Aren',
                     phone: '-',
                     disabled: true
                 }
