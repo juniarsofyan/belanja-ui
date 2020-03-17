@@ -364,6 +364,16 @@
                         disabled: true
                     },
                     {
+                        code: '00985',
+                        province_id: 3,
+                        city_id: 232,
+                        city_name: 'LEBAK',
+                        subdistrict_id: 3308,
+                        subdistrict_name: 'Cilograng',
+                        phone: '-',
+                        disabled: true
+                    },
+                    {
                         code: '00539',
                         province_id: 34,
                         city_id: 278,
